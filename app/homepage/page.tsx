@@ -107,7 +107,7 @@ export default function MusicSearchHomePage() {
                 <span className="text-sm font-semibold text-gray-800">{mockUser.name}</span>
                 <span className="text-xs text-gray-500">{mockUser.email}</span>
             </div>
-            <a href="/login" title="Logout">
+            <a href="./" title="Logout">
               <button 
                 className="flex items-center space-x-1 px-3 py-2 text-sm font-medium rounded-lg bg-red-600 text-white hover:bg-red-700 transition shadow-sm"
               >
