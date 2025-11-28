@@ -1,5 +1,4 @@
-import { GalleryVerticalEnd } from "lucide-react"
-
+import { Music } from "lucide-react"
 import { SignupForm } from "@/components/signup-form"
 
 export default async function SignupPage({
@@ -10,13 +9,17 @@ export default async function SignupPage({
   const params = await searchParams
   
   return (
-    <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
-      <div className="flex w-full max-w-sm flex-col gap-6">
-        <a href="#" className="flex items-center gap-2 self-center font-medium">
-          <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
-            <GalleryVerticalEnd className="size-4" />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-4">
+      <div className="w-full max-w-md">
+        {/* Logo/Brand */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl shadow-lg mb-4">
+            <Music className="w-8 h-8 text-white" />
           </div>
-        </a>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">MusicSearch</h1>
+          <p className="text-gray-600">Create your account to get started</p>
+        </div>
+        
         <SignupForm error={params.error} message={params.message} />
       </div>
     </div>
