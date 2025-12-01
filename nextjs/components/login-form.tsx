@@ -22,10 +22,10 @@ export function LoginForm({
 }) {
   return (
     <div className={cn("flex flex-col", className)} {...props}>
-      <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
+      <div className="rounded-2xl shadow-xl border border-border bg-card text-card-foreground p-8">
         <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome back</h2>
-          <p className="text-gray-600 text-sm">
+          <h2 className="text-2xl font-bold text-foreground mb-2">Welcome back</h2>
+          <p className="text-sm text-muted-foreground">
             Sign in to your account to continue
           </p>
         </div>
@@ -47,7 +47,7 @@ export function LoginForm({
         <form action={login}>
           <FieldGroup>
             <Field>
-              <FieldLabel htmlFor="email" className="text-gray-700 font-medium mb-1.5">
+              <FieldLabel htmlFor="email" className="font-medium mb-1.5 text-foreground">
                 Email address
               </FieldLabel>
               <Input
@@ -56,12 +56,12 @@ export function LoginForm({
                 type="email"
                 placeholder="you@example.com"
                 required
-                className="h-11 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                className="h-11 border-input bg-background focus:border-blue-500 focus:ring-blue-500"
               />
             </Field>
             <Field>
               <div className="flex items-center justify-between mb-1.5">
-                <FieldLabel htmlFor="password" className="text-gray-700 font-medium">
+                <FieldLabel htmlFor="password" className="font-medium text-foreground">
                   Password
                 </FieldLabel>
                 <a
@@ -71,12 +71,12 @@ export function LoginForm({
                   Forgot password?
                 </a>
               </div>
-              <Input 
-                id="password" 
-                name="password" 
-                type="password" 
+              <Input
+                id="password"
+                name="password"
+                type="password"
                 required
-                className="h-11 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                className="h-11 border-input bg-background focus:border-blue-500 focus:ring-blue-500"
               />
             </Field>
             <Field>
@@ -86,7 +86,7 @@ export function LoginForm({
               >
                 Sign in
               </Button>
-              <FieldDescription className="text-center text-sm text-gray-600 mt-4">
+              <FieldDescription className="text-center text-sm text-muted-foreground mt-4">
                 Don&apos;t have an account?{" "}
                 <Link href="/signup" className="text-blue-600 hover:text-blue-700 font-semibold">
                   Sign up

@@ -22,11 +22,11 @@ export function SignupForm({
 }) {
   return (
     <div className={cn("flex flex-col", className)} {...props}>
-      <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
+      <div className="rounded-2xl shadow-xl border border-border bg-card text-card-foreground p-8">
         <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Create your account</h2>
-          <p className="text-gray-600 text-sm">
-            Get started with MusicSearch today
+          <h2 className="text-2xl font-bold text-foreground mb-2">Create your account</h2>
+          <p className="text-sm text-muted-foreground">
+            Get started with Melodora today
           </p>
         </div>
 
@@ -47,7 +47,7 @@ export function SignupForm({
         <form action={signup}>
           <FieldGroup>
             <Field>
-              <FieldLabel htmlFor="email" className="text-gray-700 font-medium mb-1.5">
+              <FieldLabel htmlFor="email" className="font-medium mb-1.5 text-foreground">
                 Email address
               </FieldLabel>
               <Input
@@ -56,21 +56,21 @@ export function SignupForm({
                 type="email"
                 placeholder="you@example.com"
                 required
-                className="h-11 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                className="h-11 border-input bg-background focus:border-blue-500 focus:ring-blue-500"
               />
             </Field>
             <Field>
-              <FieldLabel htmlFor="password" className="text-gray-700 font-medium mb-1.5">
+              <FieldLabel htmlFor="password" className="font-medium mb-1.5 text-foreground">
                 Password
               </FieldLabel>
-              <Input 
-                id="password" 
-                name="password" 
-                type="password" 
+              <Input
+                id="password"
+                name="password"
+                type="password"
                 required
-                className="h-11 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                className="h-11 border-input bg-background focus:border-blue-500 focus:ring-blue-500"
               />
-              <FieldDescription className="text-xs text-gray-500 mt-1.5">
+              <FieldDescription className="text-xs text-muted-foreground mt-1.5">
                 Must be at least 8 characters long
               </FieldDescription>
             </Field>
@@ -81,7 +81,7 @@ export function SignupForm({
               >
                 Create account
               </Button>
-              <FieldDescription className="text-center text-sm text-gray-600 mt-4">
+              <FieldDescription className="text-center text-sm text-muted-foreground mt-4">
                 Already have an account?{" "}
                 <Link href="/login" className="text-blue-600 hover:text-blue-700 font-semibold">
                   Sign in

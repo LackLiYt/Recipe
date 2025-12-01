@@ -38,25 +38,29 @@ function LandingPage() {
   }, [currentSlide]);
 
   return (
-    <div className="relative bg-slate-950 text-white" ref={containerRef} style={{ height: '100vh', overflowY: 'hidden' }}>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur border-b border-slate-800">
+    <div
+    className="relative bg-background text-foreground dark:bg-slate-950 dark:text-white"
+    ref={containerRef}
+    style={{ height: '100vh', overflowY: 'hidden' }}
+  >
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 dark:bg-background/80 backdrop-blur border-b border">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Music className="w-6 h-6 text-sky-400" strokeWidth={1.5} />
-            <span className="text-xl font-bold">NCS Finder</span>
+            <span className="text-xl font-bold">Melodora</span>
           </div>
 
           <nav className="hidden md:flex items-center gap-8">
-            <button onClick={() => setCurrentSlide(0)} className="text-slate-300 hover:text-white transition-colors">
+            <button onClick={() => setCurrentSlide(0)} className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
               Home
             </button>
-            <button onClick={() => setCurrentSlide(1)} className="text-slate-300 hover:text-white transition-colors">
+            <button onClick={() => setCurrentSlide(1)} className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
               How It Works
             </button>
-            <button onClick={() => setCurrentSlide(2)} className="text-slate-300 hover:text-white transition-colors">
+            <button onClick={() => setCurrentSlide(2)} className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
               Features
             </button>
-            <button onClick={() => setCurrentSlide(3)} className="text-slate-300 hover:text-white transition-colors">
+            <button onClick={() => setCurrentSlide(3)} className="text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
               About
             </button>
           </nav>
@@ -81,16 +85,16 @@ function LandingPage() {
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-slate-800 bg-slate-900/50">
             <div className="px-6 py-4 space-y-3">
-              <button onClick={() => { setCurrentSlide(0); setMobileMenuOpen(false); }} className="block w-full text-left py-2 hover:text-sky-400 transition-colors">
+              <button onClick={() => { setCurrentSlide(0); setMobileMenuOpen(false); }} className="block w-full text-left py-2 text-slate-800 dark:text-slate-200 hover:text-sky-500 dark:hover:text-sky-400 transition-colors">
                 Home
               </button>
-              <button onClick={() => { setCurrentSlide(1); setMobileMenuOpen(false); }} className="block w-full text-left py-2 hover:text-sky-400 transition-colors">
+              <button onClick={() => { setCurrentSlide(1); setMobileMenuOpen(false); }} className="block w-full text-left py-2 text-slate-800 dark:text-slate-200 hover:text-sky-500 dark:hover:text-sky-400 transition-colors">
                 How It Works
               </button>
-              <button onClick={() => { setCurrentSlide(2); setMobileMenuOpen(false); }} className="block w-full text-left py-2 hover:text-sky-400 transition-colors">
+              <button onClick={() => { setCurrentSlide(2); setMobileMenuOpen(false); }} className="block w-full text-left py-2 text-slate-800 dark:text-slate-200 hover:text-sky-500 dark:hover:text-sky-400 transition-colors">
                 Features
               </button>
-              <button onClick={() => { setCurrentSlide(3); setMobileMenuOpen(false); }} className="block w-full text-left py-2 hover:text-sky-400 transition-colors">
+              <button onClick={() => { setCurrentSlide(3); setMobileMenuOpen(false); }} className="block w-full text-left py-2 text-slate-800 dark:text-slate-200 hover:text-sky-500 dark:hover:text-sky-400 transition-colors">
                 About
               </button>
 
@@ -121,10 +125,10 @@ function LandingPage() {
             </div>
 
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent animate-in fade-in duration-700 delay-100">
-              NCS Song Finder
+              Melodora
             </h1>
 
-            <p className="text-lg md:text-xl text-slate-300 mb-8 leading-relaxed max-w-2xl animate-in fade-in duration-700 delay-200">
+            <p className="text-lg md:text-xl text-slate-700 dark:text-slate-300 mb-8 leading-relaxed max-w-2xl animate-in fade-in duration-700 delay-200">
               Instantly identify and discover copyright-free NCS music from any link. Whether you found it on YouTube, SoundCloud, or anywhere else, we'll help you find the perfect track details in seconds.
             </p>
 
@@ -137,7 +141,7 @@ function LandingPage() {
               </a>
             </div>
 
-            <div className="mt-16 pt-16 space-y-4 text-slate-400 text-sm max-w-2xl">
+            <div className="mt-16 pt-16 space-y-4 text-slate-600 dark:text-slate-400 text-sm max-w-2xl">
               <p>✓ Fast and accurate song identification</p>
               <p>✓ Support for all major platforms</p>
               <p>✓ Complete track information at your fingertips</p>
@@ -166,7 +170,7 @@ function LandingPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-lg mb-1">Paste Your Link</h3>
-                    <p className="text-slate-400">Share any link containing NCS music - YouTube, SoundCloud, TikTok, or anywhere else</p>
+                    <p className="text-slate-700 dark:text-slate-400">Share any link containing NCS music - YouTube, SoundCloud, TikTok, or anywhere else</p>
                   </div>
                 </div>
 
@@ -178,7 +182,7 @@ function LandingPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-lg mb-1">Instant Analysis</h3>
-                    <p className="text-slate-400">Our AI-powered system analyzes the audio and searches through our extensive NCS database</p>
+                    <p className="text-slate-700 dark:text-slate-400">Our smart system analyzes the audio and searches through our extensive NCS database</p>
                   </div>
                 </div>
 
@@ -190,7 +194,7 @@ function LandingPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-lg mb-1">Get Full Details</h3>
-                    <p className="text-slate-400">Receive complete information: artist, title, release date, genre, and direct download links</p>
+                    <p className="text-slate-700 dark:text-slate-400">Receive complete information: artist, title, release date, genre, and direct download links</p>
                   </div>
                 </div>
               </div>
@@ -225,12 +229,12 @@ function LandingPage() {
         </section>
 
         {/* SLIDE 2 */}
-        <section className="fixed inset-0 flex items-center justify-center overflow-hidden px-6 pt-20 bg-gradient-to-b from-slate-950 to-slate-900"
+        <section className="fixed inset-0 flex items-center justify-center overflow-hidden px-6 pt-20 bg-gradient-to-b from-background to-muted dark:from-slate-950 dark:to-slate-900"
           style={{ transform: `translateY(${(2 - currentSlide) * 100}%)`, transition: 'transform 0.8s ease-out' }}>
           <div className="max-w-6xl w-full">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">Powerful Features</h2>
-              <p className="text-xl text-slate-400">Everything you need to manage and discover NCS music</p>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">Powerful Features</h2>
+              <p className="text-xl text-slate-700 dark:text-slate-300">Everything you need to manage and discover NCS music</p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
@@ -253,13 +257,13 @@ function LandingPage() {
               ].map((feature, index) => (
                 <div
                   key={index}
-                  className="bg-slate-900/50 backdrop-blur border border-slate-800 rounded-xl p-8 hover:border-sky-500/50 transition-all hover:shadow-lg hover:shadow-sky-500/10"
+                  className="bg-card/90 text-card-foreground backdrop-blur border border-border rounded-xl p-8 hover:border-sky-500/50 transition-all hover:shadow-lg hover:shadow-sky-500/10"
                 >
                   <div className="w-14 h-14 rounded-lg bg-sky-500/10 flex items-center justify-center mb-6">
                     <feature.icon className="w-7 h-7 text-sky-400" />
                   </div>
                   <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
-                  <p className="text-slate-400 leading-relaxed">{feature.description}</p>
+                  <p className="text-slate-700 dark:text-slate-300 leading-relaxed">{feature.description}</p>
                 </div>
               ))}
             </div>
@@ -268,8 +272,8 @@ function LandingPage() {
               <div className="flex items-center gap-4">
                 <Sparkles className="w-8 h-8 text-sky-400 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-lg mb-1">Save Your Searches</h3>
-                  <p className="text-slate-400">Keep a history of all your song discoveries and create playlists of your favorite NCS tracks</p>
+                  <h3 className="font-semibold text-lg mb-1 text-foreground">Save Your Searches</h3>
+                  <p className="text-slate-700 dark:text-slate-300">Keep a history of all your song discoveries and create playlists of your favorite NCS tracks</p>
                 </div>
               </div>
             </div>
@@ -280,14 +284,14 @@ function LandingPage() {
         <section className="fixed inset-0 flex items-center justify-center overflow-hidden px-6 pt-20"
           style={{ transform: `translateY(${(3 - currentSlide) * 100}%)`, transition: 'transform 0.8s ease-out' }}>
           <div className="max-w-4xl w-full">
-            <h2 className="text-4xl md:text-5xl font-bold mb-8">
-              About NCS Song Finder
+            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-foreground">
+              About Melodora
             </h2>
 
             <div className="space-y-8">
               <div>
-                <h3 className="text-2xl font-semibold mb-3 text-sky-400">Our Mission</h3>
-                <p className="text-lg text-slate-300 leading-relaxed">
+                <h3 className="text-2xl font-semibold mb-3 text-sky-500">Our Mission</h3>
+                <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
                   We're dedicated to making it easy for content creators, producers, and music enthusiasts to discover and identify NCS (No Copyright Sounds) music.
                   Our platform eliminates the frustration of finding that perfect copyright-free track you
                   heard somewhere.
@@ -295,16 +299,16 @@ function LandingPage() {
               </div>
 
               <div>
-                <h3 className="text-2xl font-semibold mb-3 text-sky-400">Why NCS?</h3>
-                <p className="text-lg text-slate-300 leading-relaxed">
+                <h3 className="text-2xl font-semibold mb-3 text-sky-500">Why NCS?</h3>
+                <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
                   NCS is the world's largest collection of free, copyright-free music. With over 1,000 tracks spanning multiple genres and moods,
                   it's the go-to resource for creators who need quality music without licensing concerns. Our tool makes accessing this incredible library even easier.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-2xl font-semibold mb-3 text-sky-400">Completely Free</h3>
-                <p className="text-lg text-slate-300 leading-relaxed">
+                <h3 className="text-2xl font-semibold mb-3 text-sky-500">Completely Free</h3>
+                <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
                   No subscriptions. No hidden fees. No credit card required. Our service is completely free and will always remain free.
                   We believe everyone should have easy access to identifying the music they love.
                 </p>
@@ -356,9 +360,9 @@ function LandingPage() {
             </p>
 
             <div className="pt-12 mt-12 border-t border-slate-800">
-              <p className="text-sm text-slate-500">
-                © 2025 NCS Song Finder. All rights reserved.
-              </p>
+                <p className="text-sm text-slate-500">
+                  © 2025 Melodora. All rights reserved.
+                </p>
             </div>
           </div>
         </section>
