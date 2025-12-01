@@ -29,8 +29,8 @@ python_back/venv/
 python_back/env/
 
 # Python Environment Variables
-.env
-.env.local
+#.env
+#.env.local
 .env.*.local
 python_back/.env
 

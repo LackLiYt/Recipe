@@ -2,20 +2,20 @@
 
 import { useEffect, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
 
 type Theme = 'light' | 'dark';
 
 function getInitialTheme(): Theme {
-  if (typeof window === 'undefined') return 'light';
+  if (typeof window === 'undefined') return 'dark';
   const stored = window.localStorage.getItem('theme');
   if (stored === 'light' || stored === 'dark') return stored;
-  // Fallback to system preference
-  const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
-  return prefersDark ? 'dark' : 'light';
+  // Default to dark mode
+  return 'dark';
 }
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>('dark');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -34,21 +34,26 @@ export function ThemeToggle() {
     window.localStorage.setItem('theme', theme);
   }, [theme, mounted]);
 
-  if (!mounted) return null;
+  if (!mounted) {
+    return (
+      <div className="flex items-center gap-2">
+        <Sun className="h-4 w-4 text-muted-foreground" />
+        <Switch checked={true} disabled />
+        <Moon className="h-4 w-4 text-muted-foreground" />
+      </div>
+    );
+  }
 
   return (
-    <button
-      type="button"
-      aria-label="Toggle theme"
-      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      className="fixed bottom-4 right-4 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white/80 text-gray-700 shadow-md backdrop-blur transition hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900/90 dark:text-gray-100 dark:hover:bg-gray-800"
-    >
-      {theme === 'dark' ? (
-        <Sun className="h-5 w-5" />
-      ) : (
-        <Moon className="h-5 w-5" />
-      )}
-    </button>
+    <div className="flex items-center gap-2">
+      <Sun className="h-4 w-4 text-muted-foreground" />
+      <Switch
+        checked={theme === 'dark'}
+        onCheckedChange={(checked) => setTheme(checked ? 'dark' : 'light')}
+        aria-label="Toggle theme"
+      />
+      <Moon className="h-4 w-4 text-muted-foreground" />
+    </div>
   );
 }
 

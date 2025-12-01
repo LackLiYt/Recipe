@@ -1,6 +1,7 @@
 "use client"
 import { useEffect, useRef, useState } from 'react';
 import { Music, Search, Download, Sparkles, Menu, X } from 'lucide-react';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 function LandingPage() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -39,10 +40,10 @@ function LandingPage() {
 
   return (
     <div
-    className="relative bg-background text-foreground dark:bg-slate-950 dark:text-white"
-    ref={containerRef}
-    style={{ height: '100vh', overflowY: 'hidden' }}
-  >
+      className="relative bg-background text-foreground"
+      ref={containerRef}
+      style={{ height: '100vh', overflowY: 'hidden' }}
+    >
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 dark:bg-background/80 backdrop-blur border-b border">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -66,6 +67,9 @@ function LandingPage() {
           </nav>
 
           <div className="flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-2 px-3 py-2 bg-background/60 backdrop-blur-md border border-border/50 rounded-lg">
+              <ThemeToggle />
+            </div>
             <a
               href="/login"
               className="hidden md:block px-4 py-2 text-sky-400 hover:text-sky-300 transition-colors font-medium"
@@ -97,6 +101,10 @@ function LandingPage() {
               <button onClick={() => { setCurrentSlide(3); setMobileMenuOpen(false); }} className="block w-full text-left py-2 text-slate-800 dark:text-slate-200 hover:text-sky-500 dark:hover:text-sky-400 transition-colors">
                 About
               </button>
+
+              <div className="flex items-center justify-center py-2 px-3 bg-background/60 backdrop-blur-md border border-border/50 rounded-lg">
+                <ThemeToggle />
+              </div>
 
               <a
                 href="/login"

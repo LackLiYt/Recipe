@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Music, LogOut, User, TrendingUp, Loader2, Search } from 'lucide-react';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 interface HistoryItem {
   id: string;
@@ -118,8 +119,8 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
-      <header className="border-b border-border bg-background/80 backdrop-blur-sm sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <header className="border-b border-border/50 bg-background/60 backdrop-blur-md sticky top-0 z-40">
+        <div className="w-full px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center">
@@ -134,23 +135,24 @@ export default function ProfilePage() {
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => router.push('/homepage')}
-                className="hidden sm:inline-flex items-center space-x-2 px-4 py-2 text-sm font-medium hover:bg-muted rounded-lg transition"
+                className="hidden sm:inline-flex items-center space-x-2 px-4 py-2 text-sm font-medium bg-background/60 backdrop-blur-md border border-border/50 hover:bg-background/80 rounded-lg transition"
               >
                 <Search className="w-4 h-4" />
                 <span>Back to search</span>
               </button>
+              <ThemeToggle />
               {user && (
                 <div className="relative">
                   <button
                     type="button"
                     onClick={() => setMenuOpen((open) => !open)}
-                    className="flex items-center space-x-2 px-3 py-1.5 rounded-full border border-border bg-background/80 text-sm font-medium hover:bg-muted transition"
+                    className="flex items-center space-x-2 px-3 py-1.5 rounded-full border border-border/50 bg-background/60 backdrop-blur-md text-sm font-medium hover:bg-background/80 transition"
                   >
                     <User className="w-4 h-4" />
                     <span className="hidden sm:inline">{user.name || 'Profile'}</span>
                   </button>
                   {menuOpen && (
-                    <div className="absolute right-0 mt-2 w-40 rounded-xl bg-card border border-border shadow-lg py-1 text-sm z-50">
+                    <div className="absolute right-0 mt-2 w-40 rounded-xl bg-background/80 backdrop-blur-md border border-border/50 shadow-lg py-1 text-sm z-50">
                       <button
                         className="w-full px-3 py-2 text-left hover:bg-muted"
                         onClick={() => {
@@ -261,14 +263,14 @@ export default function ProfilePage() {
             <h4 className="text-sm font-semibold">Quick links</h4>
             <button
               onClick={() => router.push('/homepage')}
-              className="w-full inline-flex items-center justify-between px-4 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition"
+              className="w-full inline-flex items-center justify-between px-4 py-2.5 rounded-xl bg-primary/90 backdrop-blur-md text-primary-foreground text-sm font-medium hover:bg-primary transition"
             >
               Go to search
               <Search className="w-4 h-4" />
             </button>
             <button
               onClick={() => router.push('/history')}
-              className="w-full inline-flex items-center justify-between px-4 py-2.5 rounded-xl border border-border text-sm font-medium hover:bg-muted transition"
+              className="w-full inline-flex items-center justify-between px-4 py-2.5 rounded-xl border border-border/50 bg-background/60 backdrop-blur-md text-sm font-medium hover:bg-background/80 transition"
             >
               View full history
               <TrendingUp className="w-4 h-4" />
@@ -276,6 +278,20 @@ export default function ProfilePage() {
           </div>
         </section>
       </main>
+
+      {/* Bottom navigation indicators - Search and History only */}
+      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-40 flex gap-2 px-4 py-3 bg-background/60 backdrop-blur-md border border-border/50 rounded-full shadow-lg">
+        <button
+          onClick={() => router.push('/homepage')}
+          className="w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-500 transition-all duration-300 hover:scale-110 active:scale-95"
+          aria-label="Go to search"
+        />
+        <button
+          onClick={() => router.push('/history')}
+          className="w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-500 transition-all duration-300 hover:scale-110 active:scale-95"
+          aria-label="Go to history"
+        />
+      </div>
     </div>
   );
 }

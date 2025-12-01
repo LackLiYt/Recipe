@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Music, TrendingUp, ExternalLink, Loader2, User, Search } from 'lucide-react';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 interface HistoryItem {
   id: string;
@@ -20,6 +21,8 @@ export default function HistoryPage() {
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [loadingHistory, setLoadingHistory] = useState(true);
   const router = useRouter();
+  const touchStartRef = useRef<number | null>(null);
+  const touchEndRef = useRef<number | null>(null);
 
   useEffect(() => {
     const supabase = createClient();
@@ -77,11 +80,40 @@ export default function HistoryPage() {
     return date.toLocaleString();
   };
 
+  // Swipe gesture handlers
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchEndRef.current = null;
+    touchStartRef.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    touchEndRef.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStartRef.current || !touchEndRef.current) return;
+    
+    const distance = touchStartRef.current - touchEndRef.current;
+    const isLeftSwipe = distance > minSwipeDistance;
+
+    if (isLeftSwipe) {
+      // Swipe left → go to homepage (search)
+      router.push('/homepage');
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div 
+      className="min-h-screen bg-background text-foreground"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
       {/* Header */}
-      <header className="border-b border-border bg-background/80 backdrop-blur-sm sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <header className="border-b border-border/50 bg-background/60 backdrop-blur-md sticky top-0 z-40">
+        <div className="w-full px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center">
@@ -96,11 +128,12 @@ export default function HistoryPage() {
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => router.push('/homepage')}
-                className="hidden sm:inline-flex items-center space-x-2 px-4 py-2 text-sm font-medium hover:bg-muted rounded-lg transition"
+                className="hidden sm:inline-flex items-center space-x-2 px-4 py-2 text-sm font-medium bg-background/60 backdrop-blur-md border border-border/50 hover:bg-background/80 rounded-lg transition"
               >
                 <Search className="w-4 h-4" />
                 <span>Back to search</span>
               </button>
+              <ThemeToggle />
               {user && (
                 <div className="hidden sm:flex items-center space-x-2 text-sm text-muted-foreground">
                   <User className="w-4 h-4" />
@@ -182,7 +215,7 @@ export default function HistoryPage() {
                       href={item.matched_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center space-x-2 px-4 py-2 bg-primary text-primary-foreground font-medium rounded-lg hover:bg-primary/90 transition"
+                      className="inline-flex items-center space-x-2 px-4 py-2 bg-primary/90 backdrop-blur-md text-primary-foreground font-medium rounded-lg hover:bg-primary transition"
                     >
                       <ExternalLink className="w-4 h-4" />
                       <span>Go to YouTube</span>
@@ -194,6 +227,21 @@ export default function HistoryPage() {
           )}
         </section>
       </main>
+
+      {/* Bottom navigation indicators - Search and History only */}
+      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-40 flex gap-2 px-4 py-3 bg-background/60 backdrop-blur-md border border-border/50 rounded-full shadow-lg">
+        <button
+          onClick={() => router.push('/homepage')}
+          className="w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-500 transition-all duration-300 hover:scale-110 active:scale-95"
+          aria-label="Go to search"
+        />
+        <button
+          onClick={() => router.push('/history')}
+          className="w-8 h-3 rounded-full bg-sky-400 transition-all duration-500 ease-in-out hover:bg-sky-300"
+          aria-label="Current page: History"
+          style={{ animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }}
+        />
+      </div>
     </div>
   );
 }

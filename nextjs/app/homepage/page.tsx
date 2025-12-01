@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Search,
   Music,
@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 // --- Link Validation Logic ---
 const YOUTUBE_REGEX =
@@ -43,6 +44,8 @@ export default function MusicSearchHomePage() {
   const [error, setError] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
+  const touchStartRef = useRef<number | null>(null);
+  const touchEndRef = useRef<number | null>(null);
 
   // Get user from Supabase
   useEffect(() => {
@@ -126,11 +129,41 @@ export default function MusicSearchHomePage() {
     }
   };
 
+  // Swipe gesture handlers
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchEndRef.current = null;
+    touchStartRef.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    touchEndRef.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStartRef.current || !touchEndRef.current) return;
+    
+    const distance = touchStartRef.current - touchEndRef.current;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isRightSwipe) {
+      // Swipe right → go to history
+      router.push('/history');
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div 
+      className="min-h-screen bg-background text-foreground"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
       {/* Header */}
-      <header className="border-b border-border bg-background/80 backdrop-blur-sm sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <header className="border-b border-border/50 bg-background/60 backdrop-blur-md sticky top-0 z-40">
+        <div className="w-full px-4 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center">
               <Music className="w-6 h-6 text-white" />
@@ -143,41 +176,44 @@ export default function MusicSearchHomePage() {
             </div>
           </div>
 
-          {user && (
-            <div className="relative">
-              <button
-                onClick={() => setMenuOpen(!menuOpen)}
-                className="hidden sm:inline-flex items-center space-x-2 px-4 py-2 text-sm font-medium hover:bg-muted rounded-lg"
-              >
-                <User className="w-4 h-4" />
-                <span>{user.name}</span>
-              </button>
+          <div className="flex items-center space-x-3">
+            <ThemeToggle />
+            {user && (
+              <div className="relative">
+                <button
+                  onClick={() => setMenuOpen(!menuOpen)}
+                  className="hidden sm:inline-flex items-center space-x-2 px-4 py-2 text-sm font-medium bg-background/60 backdrop-blur-md border border-border/50 hover:bg-background/80 rounded-lg"
+                >
+                  <User className="w-4 h-4" />
+                  <span>{user.name}</span>
+                </button>
 
-              {menuOpen && (
-                <div className="absolute right-0 mt-2 w-40 rounded-xl bg-card border border-border shadow-lg py-1 text-sm">
-                  <button
-                    className="w-full px-3 py-2 text-left hover:bg-muted"
-                    onClick={() => router.push('/profile')}
-                  >
-                    Profile
-                  </button>
-                  <button
-                    className="w-full px-3 py-2 text-left hover:bg-muted"
-                    onClick={() => router.push('/history')}
-                  >
-                    History
-                  </button>
-                  <div className="my-1 h-px bg-border" />
-                  <button
-                    className="w-full px-3 py-2 text-left text-destructive hover:bg-destructive/10"
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
+                {menuOpen && (
+                  <div className="absolute right-0 mt-2 w-40 rounded-xl bg-background/80 backdrop-blur-md border border-border/50 shadow-lg py-1 text-sm">
+                    <button
+                      className="w-full px-3 py-2 text-left hover:bg-muted"
+                      onClick={() => router.push('/profile')}
+                    >
+                      Profile
+                    </button>
+                    <button
+                      className="w-full px-3 py-2 text-left hover:bg-muted"
+                      onClick={() => router.push('/history')}
+                    >
+                      History
+                    </button>
+                    <div className="my-1 h-px bg-border" />
+                    <button
+                      className="w-full px-3 py-2 text-left text-destructive hover:bg-destructive/10"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </header>
 
@@ -207,7 +243,7 @@ export default function MusicSearchHomePage() {
           <button
             type="submit"
             disabled={loading || !isValidYouTubeUrl(linkInput)}
-            className="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl flex items-center justify-center gap-2"
+            className="w-full py-4 bg-gradient-to-r from-blue-600/90 to-indigo-600/90 backdrop-blur-md text-white rounded-xl flex items-center justify-center gap-2 hover:from-blue-600 hover:to-indigo-600 transition"
           >
             {loading ? (
               <>
@@ -249,7 +285,7 @@ export default function MusicSearchHomePage() {
               href={result.matched_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary/90 backdrop-blur-md text-primary-foreground rounded-lg hover:bg-primary transition"
             >
               <ExternalLink className="w-4 h-4" />
               Open on YouTube
@@ -257,6 +293,21 @@ export default function MusicSearchHomePage() {
           </div>
         )}
       </main>
+
+      {/* Bottom navigation indicators - Search and History only */}
+      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-40 flex gap-2 px-4 py-3 bg-background/60 backdrop-blur-md border border-border/50 rounded-full shadow-lg">
+        <button
+          onClick={() => router.push('/homepage')}
+          className="w-8 h-3 rounded-full bg-sky-400 transition-all duration-500 ease-in-out hover:bg-sky-300"
+          aria-label="Current page: Search"
+          style={{ animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }}
+        />
+        <button
+          onClick={() => router.push('/history')}
+          className="w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-500 transition-all duration-300 hover:scale-110 active:scale-95"
+          aria-label="Go to history"
+        />
+      </div>
     </div>
   );
 }
